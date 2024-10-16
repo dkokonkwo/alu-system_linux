@@ -1,0 +1,2 @@
+symbols:
+	nm -p $(OBJFILE)
