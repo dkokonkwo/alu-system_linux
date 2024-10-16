@@ -19,7 +19,7 @@ int main(int argc, char *argv[]) {
     int found_symbols = 0;
     while (fgets(line, sizeof(line), fp) != NULL) {
         if (strstr(line, "no symbols") != NULL) {
-            fprintf(stderr, "%s: %s", argv[0], line);
+            fprintf(stderr, "%s: %s: no symbols\n.", argv[0], argv[1]);
             found_symbols = 1;
         } else {
             printf("%s", line);
