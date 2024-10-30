@@ -41,19 +41,15 @@ execve(argv[1], argv + 1, envp);
 }
 else
 {
-for (status = 1, print = 0; !WIFEXITED(status); print ^= 1)
+for (status = 1, print = 1; !WIFEXITED(status); print ^= 1)
 {
 ptrace(PTRACE_SYSCALL, child, NULL, NULL);
 wait(&status);
 ptrace(PTRACE_GETREGS, child, NULL, &regs);
 if (print)
-{
 printf("\n");
-}
 else
-{
 printf("%s", syscalls_64_g[regs.orig_rax].name);
-}
 }
 }
 return (0);
