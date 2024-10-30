@@ -19,7 +19,6 @@ int main(int argc, char *argv[], char *envp[])
 int print, status;
 struct user_regs_struct regs;
 pid_t child;
-unsigned long sys_num;
 
 if (argc < 2)
 {
@@ -49,10 +48,11 @@ wait(&status);
 ptrace(PTRACE_GETREGS, child, NULL, &regs);
 if (print)
 {
-sys_num = regs.orig_rax;
-const char *syscall_name = (sys_num < sizeof(syscalls_64_g)
-/ sizeof(syscalls_64_g[0])) ? syscalls_64_g[sys_num].name : "unknown";
-printf("%s\n", syscall_name);
+printf("\n");
+}
+else
+{
+printf("%s", syscalls_64_g[regs.orig_rax].name);
 }
 }
 }
