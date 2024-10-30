@@ -20,7 +20,6 @@ int print, status;
 struct user_regs_struct regs;
 pid_t child;
 unsigned long sys_num;
-syscall_t sys_struct;
 
 if (argc < 2)
 {
@@ -51,8 +50,7 @@ ptrace(PTRACE_GETREGS, child, NULL, &regs);
 if (print)
 {
 sys_num = regs.orig_rax;
-sys_struct = (syscall_t)syscalls_64_g[sys_num];
-printf("%s\n", sys_name.name);
+printf("%s\n", (syscall_t)syscalls_64_g[sys_num].name);
 }
 }
 }
