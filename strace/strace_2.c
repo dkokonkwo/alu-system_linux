@@ -35,7 +35,7 @@ return (1);
 }
 else if (child == 0)
 {
-printf("execve = 0");
+printf("execve");
 ptrace(PTRACE_TRACEME, child, NULL, NULL);
 execve(argv[1], argv + 1, envp);
 }
@@ -51,7 +51,7 @@ if (print)
 else if (WIFEXITED(status))
     printf(" = ?\n");
 else
-    printf("%#lx", (size_t)regs.rax);
+    printf(" = %#lx", (size_t)regs.rax);
 }
 }
 return (0);
