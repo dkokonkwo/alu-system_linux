@@ -16,14 +16,14 @@
 void args_print(const syscall_t *sys_call, struct user_regs_struct *regs)
 {
     size_t i, params[MAX_PARAMS]; /* Maximum number of parameter is 6 */
-    params[0] = regs->rdi, params[1] = regs->rsi, params[2] = reg->rdx;
+    params[0] = regs->rdi, params[1] = regs->rsi, params[2] = regs->rdx;
     params[3] = regs->r10, params[4] = regs->r8, params[5] = regs->r9;
     /* reg address are from linux system call table for x86 64 */
 
     printf("(");
-    for (i = 0; sys_call->params[0] != void && i < sys_call->nb_params; i++)
+    for (i = 0; sys_call->params[0] != VOID && i < sys_call->nb_params; i++)
     {
-        if (sys_call->params == VARARGS)
+        if (sys_call->params[i] == VARARGS)
             printf("%s...", i ? ", " : "");
         else
             printf("%s%#lx", i ? ", " : "", params[i]);
