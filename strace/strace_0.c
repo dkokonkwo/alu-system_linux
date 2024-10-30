@@ -21,7 +21,7 @@ pid_t child;
 
 if (argc < 2)
 {
-fprinf(stderr, "Usage: %s command [args...]\n", argv[0]);
+fprintf(stderr, "Usage: %s command [args...]\n", argv[0]);
 return (1);
 }
 
@@ -34,7 +34,7 @@ return (1);
 else if (child == 0)
 {
 ptrace(PTRACE_TRACEME, 0, 0, 0);
-argcv[argc] = 0;
+argc[argc] = 0;
 execvp(argv[1], argv+1);
 }
 wait(&status);
@@ -44,6 +44,7 @@ ptrace(PTRACE_GETREGS, child, 0, &regs);
 print = regs.orig_eax;
 if (print == __NR_open)
 {
-printf("%d\n". print);
+printf("%d\n", print);
 }
+return 0;
 }
