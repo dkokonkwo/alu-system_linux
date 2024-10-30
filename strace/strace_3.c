@@ -57,7 +57,7 @@ return (1);
 }
 else if (child == 0)
 {
-printf("execve(0, 0, 0)");
+printf("execve(0, 0, 0");
 ptrace(PTRACE_TRACEME, child, NULL, NULL);
 execve(argv[1], argv + 1, envp);
 }
