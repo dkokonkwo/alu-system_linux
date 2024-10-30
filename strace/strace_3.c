@@ -9,6 +9,28 @@
 #include "syscalls.h"
 
 /**
+ * args_print - prints aruguemnt in a syscall table
+ * @sys_call: pointer to syscall struct
+ * @regs: syscall register
+ */
+void args_print(const syscall_t *sys_call, struct user_regs_struct *regs)
+{
+    size_t i, params[MAX_PARAMS]; /* Maximum number of parameter is 6 */
+    params[0] = regs->rdi, params[1] = regs->rsi, params[2] = reg->rdx;
+    params[3] = regs->r10, params[4] = regs->r8, params[5] = regs->r9;
+    /* reg address are from linux system call table for x86 64 */
+
+    printf("(");
+    for (i = 0; sys_call->params[0] != void && i < sys_call->nb_params; i++)
+    {
+        if (sys_call->params == VARARGS)
+            printf("%s...", i ? ", " : "");
+        else
+            printf("%s%#lx", i ? ", " : "", params[i]);
+    }
+}
+
+/**
  * main - executes and traces a given command
  * @argc: number of arguments
  * @argv: array of arguments
@@ -16,10 +38,9 @@
  */
 int main(int argc, char *argv[], char *envp[])
 {
-int print, status;
+int next, status;
 struct user_regs_struct regs;
 pid_t child;
-size_t i;
 
 if (argc < 2)
 {
@@ -36,27 +57,26 @@ return (1);
 }
 else if (child == 0)
 {
-printf("execve(0, 0, 0) = 0");
+printf("execve(0, 0, 0)");
 ptrace(PTRACE_TRACEME, child, NULL, NULL);
 execve(argv[1], argv + 1, envp);
 }
 else
 {
-for (status = 1, print = 1; !WIFEXITED(status); print ^= 1)
+for (status = 1, next = 0; !WIFEXITED(status); next ^= 1)
 {
 ptrace(PTRACE_SYSCALL, child, NULL, NULL);
 wait(&status);
 ptrace(PTRACE_GETREGS, child, NULL, &regs);
-if (print)
-printf("\n");
-else
+if (next)
 {
-printf("%s(", syscalls_64_g[regs.orig_rax].name);
-for (i = 0; i < syscalls_64_g[regs.orig_rax].nb_params - 1; i++)
-printf("%x, ", syscalls_64_g[regs.orig_rax].params[i]);
-printf("%x)", syscalls_64_g[regs.orig_rax].params[i]);
-printf(" = %x", syscalls_64_g[regs.orig_rax].ret);
+    printf("\n%s", syscalls_64_g[regs.orig_rax].name);
+    args_print(&syscalls_64_g[regs.orig_rax], &regs);
 }
+else if (WIFEXITED(status))
+    printf(") = ?\n");
+else
+    printf(") = %#lx", (size_t)regs.rax);
 }
 }
 return (0);
