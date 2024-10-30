@@ -50,7 +50,9 @@ ptrace(PTRACE_GETREGS, child, NULL, &regs);
 if (print)
 {
 sys_num = regs.orig_rax;
-printf("%s\n", (syscall_t)syscalls_64_g[sys_num].name);
+const char *syscall_name = (sys_num < sizeof(syscalls_64_g)
+/ sizeof(syscalls_64_g[0])) ? syscalls_64_g[sys_num].name : "unknown";
+printf("%s\n", syscall_name);
 }
 }
 }
