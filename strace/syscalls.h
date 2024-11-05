@@ -1,10 +1,21 @@
 #ifndef _SYSCALLS_H_
 # define _SYSCALLS_H_
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/ptrace.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <sys/user.h>
+#include <unistd.h>
+#include <errno.h>
 # include <stddef.h>
 
 /* Normally, MAX_PARAMS is always 6 */
 # define MAX_PARAMS	6
+
+# define SYSCALL_TABLE_SIZE 400
 
 /**
  * enum type_e - Enumerates the different types present in the different
