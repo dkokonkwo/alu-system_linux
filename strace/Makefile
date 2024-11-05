@@ -1,8 +1,8 @@
 CC = gcc
 CFLAGS = -Wall -g
 
-strace_3: strace_3.c
-	$(CC) $(CFLAGS) -o strace_3 strace_3.c
+strace_3: strace_4.c
+	$(CC) $(CFLAGS) -o strace_4 strace_4.c
 
 clean:
-	rm -f strace_3
+	rm -f strace_4
