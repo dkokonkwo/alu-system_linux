@@ -1,7 +1,6 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include <math.h>
 #include "list.h"
 
 /**
@@ -18,7 +17,7 @@ while (1)
 {
 int is_prime = 1;
 
-for (i = 2; i <= sqrt(num); i++)
+for (i = 2; i <= num / 2; i++)
 {
 if (num % i == 0)
 {
