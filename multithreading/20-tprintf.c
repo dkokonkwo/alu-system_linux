@@ -1,7 +1,5 @@
 #include "multithreading.h"
 
-pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
-
 /**
  * tprintf - usrs printf family to print out string
  * @format: formatted string
