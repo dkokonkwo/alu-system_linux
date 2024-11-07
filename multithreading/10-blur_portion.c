@@ -8,7 +8,8 @@
  * @py: y coordinate of pixel
  * Return: pointer to new blurred pixel
  */
-pixel_t apply_kernel(const img_t *img, const kernel_t *kernel, size_t px, size_t py)
+pixel_t apply_kernel(const img_t *img, const kernel_t *kernel,
+size_t px, size_t py)
 {
 int half = kernel->size / 2;
 float sum_r = 0, sum_g = 0, sum_b = 0, sum = 0;
@@ -18,13 +19,13 @@ float kernel_value;
 pixel_t result;
 for (ky = -half; ky <= half; ky++)
 {
-for (kx = -half; kx <=half; kx++)
+for (kx = -half; kx <= half; kx++)
 {
 nx = px + kx; /* neighbouring pixel X-coordinate */
 ny = py + ky; /* neighbouring pixel Y-coordinate */
 if (nx >= 0 && nx < (int)img->w && ny >= 0 && ny < (int)img->h)
 {
-pixel_idx = ny * img->w + nx;
+pixel_idx = (ny * img->w) + nx;
 kernel_value = kernel->matrix[ky + half][kx + half];
 sum_r += img->pixels[pixel_idx].r * kernel_value;
 sum_g += img->pixels[pixel_idx].g * kernel_value;
@@ -48,14 +49,15 @@ return (result);
 void blur_portion(blur_portion_t const *portion)
 {
 size_t x, y, pixel_idx;
-if(!portion)
+if (!portion)
 return;
 for (y = portion->y; y < portion->y + portion->h; y++)
 {
 for (x = portion->x; x < portion->x + portion->w; x++)
 {
 pixel_idx = y * portion->img->w + x;
-portion->img_blur->pixels[pixel_idx] = apply_kernel(portion->img, portion->kernel, x, y);
+portion->img_blur->pixels[pixel_idx] = apply_kernel(portion->img,
+portion->kernel, x, y);
 }
 }
 }
