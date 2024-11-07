@@ -12,8 +12,7 @@ pixel_t *apply_kernel(img_t *img, kernel_t *kernel, size_t px, size_t py)
 {
 int half = kernel->size / 2;
 float sum_r = 0, sum_g = 0, sum_b = 0, sum = 0;
-int kx, ky;
-size_t nx, ny;
+int kx, ky, nx, ny;
 size_t pixel_idx;
 float kernel_value;
 pixel_t result;
@@ -23,7 +22,7 @@ for (kx = -half; kx <=half; kx++)
 {
 nx = px + kx; /* neighbouring pixel X-coordinate */
 ny = py + ky; /* neighbouring pixel Y-coordinate */
-if (nx >= 0 && nx < img->w && ny >= 0 && ny < img->h)
+if (nx >= 0 && nx < (int)img->w && ny >= 0 && ny < (int)img->h)
 {
 pixel_idx = ny * img->w + nx;
 kernel_value = kernel->matrix[ky + half][kx + half];
