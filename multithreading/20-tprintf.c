@@ -9,9 +9,10 @@ pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 int tprintf(char const *format, ...)
 {
 va_list args;
+pthread_t tid;
 pthread_mutex_lock(&mutex);
 
-pthread_t tid = pthread_self();
+tid = pthread_self();
 
 printf("[%lu]", (unsigned long)tid);
 
