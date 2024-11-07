@@ -10,18 +10,25 @@
  */
 unsigned long get_prime(unsigned long initial)
 {
-unsigned long final, i;
-final = initial + 1;
-if (final == 2 || final == 3)
-return (final);
+unsigned long num = initial + 1;
+
 while (1)
 {
-for (i = 2; final % i != 0; i++)
+int is_prime = 1;
+
+for (unsigned long i = 2; i <= sqrt(num); i++)
 {
-if (i > (final / 2))
-return (final);
+if (num % i == 0)
+{
+is_prime = 0;
+break;
 }
-final++;
+}
+
+if (is_prime)
+return (num);
+
+num++;
 }
 }
 
@@ -33,52 +40,52 @@ final++;
  */
 list_t *prime_factors(char const *s)
 {
+unsigned long num, divisor, *factor;
+char *end;
 list_t *list;
-node_t *node;
-unsigned long num, i, pprime, divisor = 1;
-int n, j;
-if (!s)
-    return (NULL);
+if (!s || strlen(s) == 0)
+return (NULL);
 
-list = (list_t *)malloc(sizeof(list_t));
+num = strtoul(s, &end, 10);
+if (*end != '\0')
+return (NULL);
+
+list = malloc(sizeof(list_t));
 if (!list)
+return (NULL);
+if (!list_init(list))
 {
-printf("Failed to create list\n");
+free(list);
 return (NULL);
 }
-list = list_init(list);
-num = 0;
-i = 1;
-for (n = strlen(s) - 1; n != -1; n--)
-{
-num += (s[n] - '0' - '\0') * i;
-i *= 10;
-}
 
+divisor = 1;
 while (num > 1)
 {
 divisor = get_prime(divisor);
-if (divisor > (num / 2))
+
+while (num % divisor == 0)
 {
-node = list_add(list, num);
-if (!node)
+factor = malloc(sizeof(unsigned long));
+if (!factor)
 {
-list_destroy(list, NULL);
+list_destroy(list, free);
+free(list);
 return (NULL);
 }
-return (list);
-}
-if (num % divisor == 0)
+
+*factor = divisor;
+if (!list_add(list, factor))
 {
-node = list_add(list, divisor);
-if (!node)
-{
-list_destroy(list, NULL);
+free(factor);
+list_destroy(list, free);
+free(list);
 return (NULL);
 }
-num = num / divisor;
-divisor = 1;
+
+num /= divisor;
 }
 }
+
 return (list);
 }
