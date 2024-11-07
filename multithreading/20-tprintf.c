@@ -14,7 +14,7 @@ pthread_mutex_lock(&mutex);
 
 tid = pthread_self();
 
-printf("[%lu]", (unsigned long)tid);
+printf("[%lu] ", (unsigned long)tid);
 
 va_start(args, format);
 vprintf(format, args);
