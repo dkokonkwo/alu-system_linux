@@ -8,6 +8,6 @@
 int tprintf(char const *format, ...)
 {
 pthread_t tid = pthread_self();
-print("[%lu] %s", tid, format);
+printf("[%lu] %s", tid, format);
 return (0);
 }
