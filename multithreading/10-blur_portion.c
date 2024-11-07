@@ -25,7 +25,7 @@ nx = px + kx; /* neighbouring pixel X-coordinate */
 ny = py + ky; /* neighbouring pixel Y-coordinate */
 if (nx >= 0 && nx < (int)img->w && ny >= 0 && ny < (int)img->h)
 {
-pixel_idx = (ny * img->w) + nx;
+pixel_idx = (ny *img->w) + nx;
 kernel_value = kernel->matrix[ky + half][kx + half];
 sum_r += img->pixels[pixel_idx].r * kernel_value;
 sum_g += img->pixels[pixel_idx].g * kernel_value;
