@@ -26,16 +26,16 @@ if (nx >= 0 && nx < (int)img->w && ny >= 0 && ny < (int)img->h)
 {
 pixel_idx = ny * img->w + nx;
 kernel_value = kernel->matrix[ky + half][kx + half];
-sum_r += img->pexels[pixel_idx]->r * kernel_value;
-sum_g += img->pexels[pixel_idx]->g * kernel_value;
-sum_b += img->pexels[pixel_idx]->b * kernel_value;
+sum_r += img->pixels[pixel_idx]->r * kernel_value;
+sum_g += img->pixels[pixel_idx]->g * kernel_value;
+sum_b += img->pixels[pixel_idx]->b * kernel_value;
 sum += kernel_value;
 }
 }
 }
-result.r = (uni8_t)(sum_r / sum);
-result.g = (uni8_t)(sum_g / sum);
-result.b = (uni8_t)(sum_b / sum);
+result.r = (uint8_t)(sum_r / sum);
+result.g = (uint8_t)(sum_g / sum);
+result.b = (uint8_t)(sum_b / sum);
 }
 
 
