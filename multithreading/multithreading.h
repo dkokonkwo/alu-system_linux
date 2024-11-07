@@ -3,6 +3,7 @@
 
 #include <stddef.h>
 #include <stdint.h>
+#include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <pthread.h>
@@ -72,4 +73,6 @@ typedef struct blur_portion_s
 
 void *thread_entry(void *arg);
 int tprintf(char const *format, ...);
+pixel_t *apply_kernel(img_t *img, kernel_t *kernel, size_t px, size_t py);
+void blur_portion(blur_portion_t const *portion);
 #endif
