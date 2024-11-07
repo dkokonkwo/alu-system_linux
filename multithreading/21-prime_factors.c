@@ -1,6 +1,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <math.h>
 #include "list.h"
 
 /**
@@ -10,13 +11,14 @@
  */
 unsigned long get_prime(unsigned long initial)
 {
-unsigned long num = initial + 1;
+unsigned long i, num;
+num = initial + 1;
 
 while (1)
 {
 int is_prime = 1;
 
-for (unsigned long i = 2; i <= sqrt(num); i++)
+for (i = 2; i <= sqrt(num); i++)
 {
 if (num % i == 0)
 {
