@@ -42,7 +42,7 @@ return (result);
 }
 
 /**
- * blur_portion  - blurs a portion of an image using a Gaussian Blur
+ * blur_image  - blurs an image using Gaussian Blur
  * @portion: pointer to structure
  * Return: Nothing
  */
