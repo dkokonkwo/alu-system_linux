@@ -36,8 +36,9 @@ sum += kernel_value;
 result.r = (uint8_t)(sum_r / sum);
 result.g = (uint8_t)(sum_g / sum);
 result.b = (uint8_t)(sum_b / sum);
-}
 
+return (result);
+}
 
 /**
  * blur_portion  - blurs a portion of an image using a Gaussian Blur
