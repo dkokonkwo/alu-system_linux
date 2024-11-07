@@ -12,7 +12,7 @@ pixel_t *apply_kernel(img_t *img, kernel_t *kernel, size_t px, size_t py)
 {
 int half = kernel->size / 2;
 float sum_r = 0, sum_g = 0, sum_b = 0, sum = 0;
-int kx, ky
+int kx, ky;
 size_t nx, ny;
 size_t pixel_idx;
 float kernel_value;
