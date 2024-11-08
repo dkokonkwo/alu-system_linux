@@ -1,12 +1,12 @@
 #include "multithreading.h"
 
 
-__attribute__((constructor)) void tprintf_mutex_init(void)
+__attribute__((constructor)) void task_mutex_init(void)
 {
 pthread_mutex_init(&task_mutex, NULL);
 }
 
-__attribute__((destructor)) void tprintf_mutex_destroy(void)
+__attribute__((destructor)) void task_mutex_destroy(void)
 {
 pthread_mutex_destroy(&task_mutex);
 }
