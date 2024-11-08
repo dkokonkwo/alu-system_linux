@@ -6,7 +6,8 @@
 #include <stdio.h> /* printf */
 #include "list.h"
 
-
+pthread_mutex_t tprintf_mutex;
+pthread_mutex_t tasks_mutex;
 /**
 * struct pixel_s - RGB pixel
 *
