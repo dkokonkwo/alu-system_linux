@@ -58,7 +58,6 @@ void *exec_tasks(list_t const *tasks)
 {
 int tpending = 1, tid;
 node_t *node;
-size_t i;
 if (!tasks)
 pthread_exit(NULL);
 while (tpending)
