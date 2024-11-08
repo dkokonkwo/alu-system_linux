@@ -43,6 +43,5 @@ list_t	*list_init(list_t *list);
 void	list_destroy(list_t *list, node_func_t free_func);
 void	list_each(list_t *list, node_func_t func);
 list_t *prime_factors(char const *s);
-unsigned long get_prime(unsigned long initial);
 
 #endif /* LIST_H */
