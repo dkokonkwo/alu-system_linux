@@ -11,7 +11,6 @@ __attribute__((destructor)) void task_mutex_destroy(void)
 pthread_mutex_destroy(&task_mutex);
 }
 
-void end(void) __attribute__((destructor));
 
 
 /**
@@ -51,7 +50,7 @@ free(task);
 }
 
 /**
- * exec_task - executes list of tasks
+ * exec_tasks - executes list of tasks
  * @tasks: pointer to list of tasks to be executed
  * Return: Nothing
  */
