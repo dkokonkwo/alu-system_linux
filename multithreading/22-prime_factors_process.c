@@ -7,8 +7,7 @@
  */
 void *exec_task(task_t *task)
 {
-void *result;
-result = task->entry(task->param);
+void *result = task->entry(task->param);
 pthread_mutex_lock(&task->lock);
 task->result = result;
 pthread_mutex_unlock(&task->lock);
@@ -22,11 +21,11 @@ return (result);
  */
 task_status_t task_stat(task_t *task)
 {
-    task_status_t stat;
-    pthread_mutex_lock(&task->lock);
-    stat = task->status;
-    pthread_mutex_unlock(&task->lock);
-    return (stat);
+task_status_t stat;
+pthread_mutex_lock(&task->lock);
+stat = task->status;
+pthread_mutex_unlock(&task->lock);
+return (stat);
 }
 
 /**
@@ -37,7 +36,7 @@ task_status_t task_stat(task_t *task)
  */
 void set_task_stat(task_t *task, task_status_t stat)
 {
-    pthread_mutex_lock(&task->lock);
-    task->status = stat;
-    pthread_mutex_unlock(&task->lock);
+pthread_mutex_lock(&task->lock);
+task->status = stat;
+pthread_mutex_unlock(&task->lock);
 }
