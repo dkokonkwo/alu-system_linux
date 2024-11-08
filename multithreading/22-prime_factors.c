@@ -42,6 +42,7 @@ void destroy_task(task_t *task)
 if (task)
 {
 list_destroy(task->result, free);
+if (task->result)
 free(task->result);
 free(task);
 }
@@ -60,8 +61,7 @@ if (!tasks)
 pthread_exit(NULL);
 while (tpending)
 {
-tpending = 0;
-for (node = tasks->head; node; node = node->next)
+for (tpending = 0, node = tasks->head; node; node = node->next)
 {
 if (task_stat(node->content) == PENDING)
 {
@@ -92,8 +92,7 @@ return (NULL);
  */
 void *exec_task(task_t *task)
 {
-void *result;
-result = task->entry(task->param);
+void *result = task->entry(task->param);
 pthread_mutex_lock(&task->lock);
 task->result = result;
 pthread_mutex_unlock(&task->lock);
