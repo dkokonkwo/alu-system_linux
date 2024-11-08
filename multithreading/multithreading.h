@@ -12,6 +12,7 @@
 #include "list.h"
 
 pthread_mutex_t mutex;
+pthread_mutex_t task_mutex;
 
 /**
  * struct pixel_s - RGB pixel
@@ -75,10 +76,58 @@ typedef struct blur_portion_s
     kernel_t const *kernel;
 } blur_portion_t;
 
+
+/* TASKS STRUCTURES AND FUNCTIONS */
+typedef void *(*task_entry_t)(void *);
+
+/**
+ * enum task_status_e - Task statuses
+ *
+ * @PENDING: Task is pending
+ * @STARTED: Task has been started
+ * @SUCCESS: Task has completed successfully
+ * @FAILURE: Task has completed with issues
+ */
+typedef enum task_status_e
+{
+    PENDING = 0,
+    STARTED,
+    SUCCESS,
+    FAILURE
+} task_status_t;
+
+/**
+ * struct task_s - Executable task structure
+ *
+ * @entry:  Pointer to a function to serve as the task entry
+ * @param:  Address to a custom content to be passed to the entry function
+ * @status: Task status, default to PENDING
+ * @result: Stores the return value of the entry function
+ * @lock:   Task mutex
+ */
+typedef struct task_s
+{
+    task_entry_t    entry;
+    void        *param;
+    task_status_t   status;
+    void        *result;
+    pthread_mutex_t lock;
+    unsigned int id;
+} task_t;
+
 void *thread_entry(void *arg);
 int tprintf(char const *format, ...);
 pixel_t apply_kernel(const img_t *img, const kernel_t *kernel, size_t px, size_t py);
 void blur_portion(blur_portion_t const *portion);
 void blur_image(img_t *img_blur, img_t const *img, kernel_t const *kernel);
 list_t *prime_factors(char const *s);
+
+task_t *create_task(task_entry_t entry, void *param);
+void destroy_task(task_t *task);
+void *exec_tasks(list_t const *tasks);
+
+void *exec_task(task_t *task);
+task_status_t task_stat(task_t *task);
+void set_task_stat(task_t *task, task_status_t stat);
+
 #endif
