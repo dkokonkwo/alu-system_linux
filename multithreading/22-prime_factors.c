@@ -11,8 +11,6 @@ __attribute__((destructor)) void task_mutex_destroy(void)
 pthread_mutex_destroy(&task_mutex);
 }
 
-
-
 /**
  * create_task - creates a task structure
  * @entry: pointer to the entry function of the task
@@ -74,7 +72,7 @@ tprintf("[%02d] Started\n", tid);
 if (exec_task(node->content))
 {
 set_task_stat(node->content, SUCCESS);
-tprintf("[%02d] Succees\n", tid);
+tprintf("[%02d] Success\n", tid);
 }
 else
 {
