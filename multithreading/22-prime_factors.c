@@ -1,5 +1,5 @@
 #include "multithreading.h"
-
+#include "22-prime_factotrs_helpers.c"
 
 __attribute__((constructor)) void task_mutex_init(void)
 {
@@ -19,9 +19,8 @@ pthread_mutex_destroy(&task_mutex);
  */
 task_t *create_task(task_entry_t entry, void *param)
 {
-task_t *task;
+task_t *task = malloc(sizeof(task_t));
 static unsigned int id;
-task = malloc(sizeof(task_t));
 if (!task)
 return (NULL);
 task->entry = entry;
