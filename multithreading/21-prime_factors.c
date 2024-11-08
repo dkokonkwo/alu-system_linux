@@ -19,7 +19,7 @@ return (NULL);
 list = malloc(sizeof(list_t));
 list_init(list);
 divisor = 2;
-while (divisor * divisor <= num)
+while (divisor *divisor <= num)
 {
 while (num % divisor == 0)
 {
