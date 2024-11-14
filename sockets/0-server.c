@@ -12,7 +12,7 @@
  * main - opens IPV4/TCP socket and listens on a port
  * Return: 0 always
  */
-int main()
+int main(void)
 {
 int server_fd;
 struct sockaddr_in address;
@@ -44,7 +44,9 @@ exit(EXIT_FAILURE);
 }
 printf("Server listening on port %d\n", PORT);
 
+while (1)
+continue;
 
 close(server_fd);
-return(0);
+return (0);
 }
