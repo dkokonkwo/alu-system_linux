@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-#include <arp/inet.h>
+#include <arpa/inet.h>
 #include <sys/socket.h>
 
 #define PORT 12345
