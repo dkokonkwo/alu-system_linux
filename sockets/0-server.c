@@ -14,7 +14,7 @@
  */
 int main()
 {
-int server_fd, new_socket;
+int server_fd;
 struct sockaddr_in address;
 int addrlen = sizeof(address);
 
@@ -45,7 +45,6 @@ exit(EXIT_FAILURE);
 printf("Server listening on port %d\n", PORT);
 
 
-close(new_socket);
 close(server_fd);
 return(0);
 }
