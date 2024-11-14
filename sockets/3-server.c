@@ -23,8 +23,7 @@ if (server_fd == -1)
 {
 perror("Socket failed");
 exit(EXIT_FAILURE); }
-address.sin_family = AF_INET;
-address.sin_addr.s_addr = INADDR_ANY;
+address.sin_family = AF_INET, address.sin_addr.s_addr = INADDR_ANY;
 address.sin_port = htons(PORT);
 if (bind(server_fd, (struct sockaddr *)&address, addrlen) < 0)
 {
@@ -52,9 +51,7 @@ valread = recv(new_socket, buffer, BUFFER_SIZE, 0);
 if (valread <= 0)
 break;
 printf("Message received: \"%s\"\n", buffer);
-break;
-}
-close(new_socket);
-close(server_fd);
+break; }
+close(new_socket), close(server_fd);
 return (0);
 }
