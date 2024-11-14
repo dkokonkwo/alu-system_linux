@@ -58,7 +58,7 @@ if (valread <= 0)
 printf("Client disconnected.\n");
 break;
 }
-printf("Mesage received: %s\n", buffer);
+printf("Message received: %s\n", buffer);
 break;
 }
 close(new_socket);
