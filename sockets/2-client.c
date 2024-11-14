@@ -4,11 +4,12 @@
 #include <unistd.h>
 #include <arpa/inet.h>
 #include <sys/socket.h>
+#include <netdb.h>
 
 /**
  * main - connects to a listening server
- * argc: argument count
- * argv: argument vector
+ * @argc: argument count
+ * @argv: argument vector
  * Return: 0 on success, exits with failure otherwise
  */
 int main(int argc, char *argv[])
@@ -16,6 +17,7 @@ int main(int argc, char *argv[])
 int sockfd;
 struct sockaddr_in server_addr;
 int port;
+struct addrinfo hints, *res, *p;
 if (argc < 3)
 {
 printf("Usage: %s <host> <port>\n", argv[0]);
@@ -27,26 +29,39 @@ if (sockfd < 0)
 perror("Socket creation error");
 exit(EXIT_FAILURE);
 }
-
 port = atoi(argv[2]);
-server_addr.sin_family = AF_INET;
-server_addr.sin_port = htons(port);
+memset(&hints, 0, sizeof(hints));
+hints.ai_family = AF_INET;
+hints.ai_socktype = SOCK_STREAM;
 
-if (inet_pton(AF_INET, argv[1], &server_addr.sin_addr) <= 0)
+if (getaddrinfo(argv[1], argv[2], &hints, &res) != 0)
 {
-perror("Invalid address/ Address not supported");
-close(sockfd);
+perror("getaddrinfo");
 exit(EXIT_FAILURE);
 }
-
-if (connect(sockfd, (struct sockaddr *)&server_addr, sizeof(server_addr)) < 0)
+for (p = res; p != NULL; p = p->ai_next)
 {
+sockfd = socket(p->ai_family, p->ai_socktype, p->ai_protocol);
+if (sockfd < 0)
+{
+perror("Socket creation error");
+continue;
+}
+if (connect(sockfd, p->ai_addr, p->ai_addrlen) == 0)
+{
+break;
+}
 perror("Connection failed");
 close(sockfd);
+}
+if (p == NULL)
+{
+fprintf(stderr, "Failed to connect\n");
+freeaddrinfo(res);
 exit(EXIT_FAILURE);
 }
 printf("Connected to %s:%s\n", argv[1], argv[2]);
-
+freeaddrinfo(res);
 close(sockfd);
 return (0);
 }
