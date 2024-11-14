@@ -49,6 +49,7 @@ perror("Accept failed");
 continue;
 }
 printf("Client connected: %s\n", inet_ntoa(address.sin_addr));
+fflush(stdout);
 handle_client(new_socket);
 close(new_socket);
 }
@@ -70,11 +71,13 @@ return;
 }
 buffer[valread] = '\0';
 printf("Raw request: \"%s\n", buffer);
+fflush(stdout);
 sscanf(buffer, "%15s %255s %15s", method, path, version);
 printf("\"\n");
 printf("Method: %s\n", method);
 printf("Path: %s\n", path);
 printf("version: %s\n", version);
+fflush(stdout);
 
 response =
 "HTTP/1.1 200 OK\r\n"
