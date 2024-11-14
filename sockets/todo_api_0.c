@@ -24,7 +24,8 @@ if (server_fd == -1)
 {
 perror("Socket failed");
 exit(EXIT_FAILURE); }
-address.sin_family = AF_INET, address.sin_addr.s_addr = INADDR_ANY;
+address.sin_family = AF_INET;
+address.sin_addr.s_addr = INADDR_ANY;
 address.sin_port = htons(PORT);
 if (bind(server_fd, (struct sockaddr *)&address, addrlen) < 0)
 {
@@ -37,6 +38,7 @@ perror("Listen failed");
 close(server_fd);
 exit(EXIT_FAILURE); }
 printf("Server listening on port %d\n", PORT);
+fflush(stdout);
 while (1)
 {
 new_socket = accept(server_fd, (struct sockaddr *)&address,

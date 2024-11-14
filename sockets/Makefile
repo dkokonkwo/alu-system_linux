@@ -6,3 +6,5 @@ todo_api_0: todo_api_0.c
 
 clean:
 	rm -f todo_api_0
+
+.PHONY: clean
