@@ -7,31 +7,32 @@
 
 /**
  * main - connects to a listening server
- * Return: 0 always
+ * argc: argument count
+ * argv: argument vector
+ * Return: 0 on success, exits with failure otherwise
  */
 int main(int argc, char *argv[])
 {
 int sockfd;
 struct sockaddr_in server_addr;
 int port;
-
-if (argc < 2)
+if (argc < 3)
 {
 printf("Usage: %s <host> <port>\n", argv[0]);
 exit(EXIT_FAILURE);
 }
-
-if ((sockfd = socket(AF_INET, SOCK_STREAM, 0)) < 0)
+sockfd = socket(AF_INET, SOCK_STREAM, 0);
+if (sockfd < 0)
 {
 perror("Socket creation error");
 exit(EXIT_FAILURE);
 }
 
-port = atoi(argv[1]);
+port = atoi(argv[2]);
 server_addr.sin_family = AF_INET;
 server_addr.sin_port = htons(port);
 
-if (inet_pton(AF_INET, argv[2], &server_addr.sin_addr) <= 0)
+if (inet_pton(AF_INET, argv[1], &server_addr.sin_addr) <= 0)
 {
 perror("Invalid address/ Address not supported");
 close(sockfd);
