@@ -40,8 +40,8 @@ exit(EXIT_FAILURE);
 }
 printf("Server listening on port %d\n", PORT);
 
-new_socket = accept(server_fd, (struct sockaddr*)&address,
-(socklen_t*)&addrlen);
+new_socket = accept(server_fd, (struct sockaddr *)&address,
+(socklen_t *)&addrlen);
 if (new_socket < 0)
 {
 perror("Accept failed");
