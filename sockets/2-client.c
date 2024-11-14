@@ -12,8 +12,7 @@
 int main(int argc, char *argv[])
 {
 int sockfd;
-struct sockadd_in server_addr;
-char *host;
+struct sockaddr_in server_addr;
 int port;
 
 if (argc < 2)
