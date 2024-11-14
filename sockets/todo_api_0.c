@@ -16,7 +16,7 @@ void handle_client(int client_socket);
  */
 int main(void)
 {
-int server_fd, new_socket, valread;
+int server_fd, new_socket;
 struct sockaddr_in address;
 int addrlen = sizeof(address);
 server_fd = socket(AF_INET, SOCK_STREAM, 0);
