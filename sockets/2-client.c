@@ -15,8 +15,6 @@
 int main(int argc, char *argv[])
 {
 int sockfd;
-struct sockaddr_in server_addr;
-int port;
 struct addrinfo hints, *res, *p;
 if (argc < 3)
 {
@@ -29,7 +27,6 @@ if (sockfd < 0)
 perror("Socket creation error");
 exit(EXIT_FAILURE);
 }
-port = atoi(argv[2]);
 memset(&hints, 0, sizeof(hints));
 hints.ai_family = AF_INET;
 hints.ai_socktype = SOCK_STREAM;
