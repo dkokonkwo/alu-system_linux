@@ -42,7 +42,7 @@ perror("Listen failed");
 close(server_fd);
 exit(EXIT_FAILURE);
 }
-printf("Server listening on port %s\n", PORT);
+printf("Server listening on port %d\n", PORT);
 
 
 close(new_socket);
