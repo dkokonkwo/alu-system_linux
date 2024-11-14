@@ -39,7 +39,6 @@ exit(EXIT_FAILURE); }
 printf("Server listening on port %d\n", PORT);
 while (1)
 {
-printf("Waiting for connection...\n");
 new_socket = accept(server_fd, (struct sockaddr *)&address,
 (socklen_t *)&addrlen);
 if (new_socket < 0)
@@ -50,7 +49,6 @@ continue;
 printf("Client connected: %s\n", inet_ntoa(address.sin_addr));
 handle_client(new_socket);
 close(new_socket);
-printf("Connection closed\n");
 }
 close(server_fd);
 return (0);
@@ -69,19 +67,15 @@ printf("Failed to read from client.\n");
 return;
 }
 buffer[valread] = '\0';
-printf("Received HTTP request:\n%s\n", buffer);
+printf("Raw request: \"%s\n", buffer);
 sscanf(buffer, "%15s %255s %15s", method, path, version);
 printf("\"\n");
-printf("Request breakdown:\n");
 printf("Method: %s\n", method);
 printf("Path: %s\n", path);
 printf("version: %s\n", version);
 
 response =
 "HTTP/1.1 200 OK\r\n"
-"Content-Type: text/plain\r\n"
-"Content-Length: 13\r\n"
-"\r\n"
-"Hellow, world!";
+"\r\n";
 send(client_socket, response, strlen(response), 0);
 }
