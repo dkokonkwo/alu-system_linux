@@ -70,7 +70,7 @@ printf("Failed to read from client.\n");
 return;
 }
 buffer[valread] = '\0';
-printf("Raw request: \"%s\n", buffer);
+printf("Raw request: \"%s", buffer);
 fflush(stdout);
 sscanf(buffer, "%15s %255s %15s", method, path, version);
 printf("\"\n");
