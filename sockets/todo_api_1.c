@@ -110,5 +110,8 @@ break;
 }
 else
 break;
+ptr = strchr(ptr, '&');
+if (ptr)
+ptr++;
 }
 }
