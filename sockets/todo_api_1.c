@@ -94,22 +94,22 @@ void parse_query_string(const char *query)
 {
 char key[256], value[256];
 const char *ptr = query;
+
 while (*ptr)
 {
-if (sscanf(ptr, "%255[^=]=%255[^&]&", key, value) == 2)
+if (sscanf(ptr, "%255[^=]=%255[^&]", key, value) == 2)
 {
 printf("Query: \"%s\" -> \"%s\"\n", key, value);
-fflush(stdout);
-ptr = strchr(ptr, '&') + 1;
 }
-else if (sscanf(ptr, "%255[^=]=%255[^&]", key, value) == 2)
+else if (sscanf(ptr, "%255[^=]", key) == 1)
 {
-printf("Query: \"%s\" -> \"%s\"\n", key, value);
-fflush(stdout);
-break;
+printf("Query: \"%s\" -> (no value)\n", key);
 }
 else
+{
 break;
+}
+
 ptr = strchr(ptr, '&');
 if (ptr)
 ptr++;
