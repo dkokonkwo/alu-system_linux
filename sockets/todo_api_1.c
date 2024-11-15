@@ -93,9 +93,6 @@ send(client_socket, response, strlen(response), 0);
 void parse_query_string(const char *buffer)
 {
 char *key, *value;
-
-path = strtok(strtok(strchr(buffer, ' ') + 1, " "), "?");
-
 for (
 key = strtok(NULL, "="), value = strtok(NULL, "&/");
 key && value;
