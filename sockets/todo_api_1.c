@@ -80,7 +80,6 @@ if (query)
 {
 *query = '\0';
 query++;
-printf("Path: %s\n", path);
 parse_query_string(buffer);
 fflush(stdout);
 }
@@ -92,7 +91,10 @@ send(client_socket, response, strlen(response), 0);
 
 void parse_query_string(const char *buffer)
 {
-char *key, *value;
+char *path, *key, *value;
+
+path = strtok(strtok(strchr(buffer, ' ') + 1, " "), "?");
+printf("Path: %s\n", path);
 for (
 key = strtok(NULL, "="), value = strtok(NULL, "&/");
 key && value;
