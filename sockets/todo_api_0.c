@@ -76,7 +76,7 @@ sscanf(buffer, "%15s %255s %15s", method, path, version);
 printf("\"\n");
 printf("Method: %s\n", method);
 printf("Path: %s\n", path);
-printf("version: %s\n", version);
+printf("Version: %s\n", version);
 fflush(stdout);
 
 response =
