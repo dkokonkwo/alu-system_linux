@@ -96,8 +96,6 @@ char *path, *key, *value;
 
 path = strtok(strtok(strchr(buffer, ' ') + 1, " "), "?");
 
-printf("Path: %s\n", path);
-
 for (
 key = strtok(NULL, "="), value = strtok(NULL, "&/");
 key && value;
