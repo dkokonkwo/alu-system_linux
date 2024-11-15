@@ -92,7 +92,7 @@ send(client_socket, response, strlen(response), 0);
 
 void parse_query_string(const char *buffer)
 {
-char *path, *key, *value;
+char *key, *value;
 
 path = strtok(strtok(strchr(buffer, ' ') + 1, " "), "?");
 
