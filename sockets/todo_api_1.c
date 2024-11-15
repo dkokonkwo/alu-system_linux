@@ -9,7 +9,7 @@
 #define BUFFER_SIZE 4096
 
 void handle_client(int client_socket);
-void parse_query_string(const char *query);
+void parse_query_string(const char *buffer);
 
 /**
  * main - opens IPV4/TCP socket and listens on a port
@@ -81,7 +81,7 @@ if (query)
 *query = '\0';
 query++;
 printf("Path: %s\n", path);
-parse_query_string(query);
+parse_query_string(buffer);
 fflush(stdout);
 }
 response =
@@ -90,25 +90,18 @@ response =
 send(client_socket, response, strlen(response), 0);
 }
 
-void parse_query_string(const char *query)
+void parse_query_string(const char *buffer)
 {
-char key[256], value[256];
-const char *ptr = query;
-while (*ptr)
-{
-if (sscanf(ptr, "%255[^=]=%255[^&]&", key, value) == 2)
-{
+char *path, *key, *value;
+
+path = strtok(strtok(strchr(buffer, ' ') + 1, " "), "?");
+
+printf("Path: %s\n", path);
+
+for (
+key = strtok(NULL, "="), value = strtok(NULL, "&/");
+key && value;
+key = strtok(NULL, "="), value = strtok(NULL, "&/")
+)
 printf("Query: \"%s\" -> \"%s\"\n", key, value);
-}
-else if (sscanf(ptr, "%255[^=]=%255[^&]", key, value) == 2)
-{
-printf("Query: \"%s\" -> \"%s\"\n", key, value);
-break;
-}
-else
-break;
-ptr = strchr(ptr, '&');
-if (ptr)
-ptr++;
-}
 }
