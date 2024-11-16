@@ -93,11 +93,11 @@ void parse_body(const char *body)
 {
 char key[256], value[256], *token;
 char *body_copy = strdup(body);
-token = strtok(body_copy, '&');
+token = strtok(body_copy, "&");
 while (token)
 {
 sscanf(token, "%255[^=]=%255s", key, value);
 printf("Body param: \"%s\" -> \"%s\"\n", key, value);
-token = strtok(NULL, '&');
+token = strtok(NULL, "&");
 }
 }
