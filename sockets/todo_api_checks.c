@@ -133,7 +133,7 @@ return response;
 
 char *get_response(todo *new_todo)
 {
-char *response, *json_body, *temp_body;
+char *response, *json_body, *temp_body, *new_body;
 size_t response_size, body_size = 0;
 task *curr;
 if (!new_todo || !new_todo->head || new_todo->nb_tasks == 0)
@@ -165,7 +165,7 @@ snprintf(temp_body, task_size + 1,
 "{\"id\":%d,\"title\":\"%s\",\"description\":\"%s\"}",
 curr->id, curr->title, curr->desc);
 
-char *new_body = realloc(json_body, body_size + task_size + 2);
+new_body = realloc(json_body, body_size + task_size + 2);
 if (!new_body)
 {
 free(json_body);
@@ -180,7 +180,7 @@ body_size += task_size + (body_size > 0 ? 1 : 0);
 free(temp_body);
 }
 
-char *new_body = realloc(json_body, body_size + 2);
+new_body = realloc(json_body, body_size + 2);
 if (!new_body)
 {
 free(json_body);
@@ -191,11 +191,11 @@ strcat(json_body, "]");
 
 response_size = snprintf(NULL, 0,
 "HTTP/1.1 200 OK\r\n"
-"Content-Length: %zu\r\n"
+"Content-Length: %lu\r\n"
 "Content-Type: application/json\r\n"
 "\r\n"
 "%s",
-strlen(json_body), json_body);
+(unsigned long)strlen(json_body), json_body);
 response = malloc(response_size + 1);
 if (!response)
 {
@@ -204,11 +204,11 @@ return NULL;
 }
 snprintf(response, response_size + 1,
 "HTTP/1.1 200 OK\r\n"
-"Content-Length: %zu\r\n"
+"Content-Length: %lu\r\n"
 "Content-Type: application/json\r\n"
 "\r\n"
 "%s",
-strlen(json_body), json_body);
+(unsigned long)strlen(json_body), json_body);
 
 free(json_body);
 return (response);
