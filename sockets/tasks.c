@@ -56,8 +56,8 @@ else
 {
 todo_list->tail->next = new_task;
 todo_list->tail = new_task;
-return (1);
 }
+return (1);
 }
 
 /**
