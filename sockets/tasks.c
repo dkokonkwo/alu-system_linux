@@ -46,16 +46,18 @@ int add_task(todo *todo_list, task *new_task)
 {
 if (!todo_list || !new_task)
 return (0);
+new_task->id = todo_list->nb_tasks++;
 if (!todo_list->head)
 {
 todo_list->head = new_task;
 todo_list->tail = new_task;
-new_task->id = todo_list->nb_tasks++;
-return (1);
 }
+else
+{
 todo_list->tail->next = new_task;
 todo_list->tail = new_task;
 return (1);
+}
 }
 
 /**
