@@ -105,11 +105,11 @@ last_task->id, last_task->title, last_task->desc);
 
 response_size = snprintf(NULL, 0,
 "HTTP/1.1 201 Created\r\n"
-"Content-Length: %zu\r\n"
+"Content-Length: %lu\r\n"
 "Content-Type: application/json\r\n"
 "\r\n"
 "%s",
-body_size, json_body);
+(unsigned long)body_size, json_body);
 response = malloc(response_size + 1);
 if (!response)
 {
