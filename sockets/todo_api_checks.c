@@ -9,6 +9,8 @@ int check_method_and_path(const char *buffer)
 char method[16], path[256], version[16];
 if (sscanf(buffer, "%15s %255s %15s", method, path, version) != 3)
 return (0);
+if (strcmp(path, "/todos") != 0)
+return (0);
 if (strcmp(method, "POST") == 0)
 return (1);
 else if (strcmp(method, "GET") == 0)
