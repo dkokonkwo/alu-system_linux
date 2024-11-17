@@ -42,5 +42,5 @@ int check_method_and_path(const char *buffer);
 int check_header(const char *buffer);
 int check_body(const char *body, todo *new_todo);
 char *server_response(todo *new_todo);
-
+char *get_response(todo *new_todo);
 #endif

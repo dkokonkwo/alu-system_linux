@@ -9,9 +9,12 @@ int check_method_and_path(const char *buffer)
 char method[16], path[256], version[16];
 if (sscanf(buffer, "%15s %255s %15s", method, path, version) != 3)
 return (0);
-if (strcmp(method, "POST") != 0 || strcmp(path, "/todos") != 0)
-return (0);
+if (strcmp(method, "POST") == 0)
 return (1);
+else if (strcmp(method, "GET") == 0)
+return (-1);
+else
+return (0);
 }
 
 /**
@@ -126,4 +129,87 @@ snprintf(response, response_size + 1,
 
 free(json_body);
 return response;
+}
+
+char *get_response(todo *new_todo)
+{
+char *response, *json_body, *temp_body;
+size_t response_size, body_size = 0;
+task *curr;
+if (!new_todo || !new_todo->head || new_todo->nb_tasks == 0)
+{
+response =
+"HTTP/1.1 200 OK\r\n"
+"Content-Length: 2\r\n"
+"Content-Type: application/json\r\n"
+"\r\n"
+"[]";
+return strdup(response);
+}
+json_body = strdup("[");
+if (!json_body)
+return NULL;
+
+for (curr = new_todo->head; curr; curr = curr->next)
+{
+size_t task_size = snprintf(NULL, 0,
+"{\"id\":%d,\"title\":\"%s\",\"description\":\"%s\"}",
+curr->id, curr->title, curr->desc);
+temp_body = malloc(task_size + 1);
+if (!temp_body)
+{
+free(json_body);
+return NULL;
+}
+snprintf(temp_body, task_size + 1,
+"{\"id\":%d,\"title\":\"%s\",\"description\":\"%s\"}",
+curr->id, curr->title, curr->desc);
+
+char *new_body = realloc(json_body, body_size + task_size + 2);
+if (!new_body)
+{
+free(json_body);
+free(temp_body);
+return NULL;
+}
+json_body = new_body;
+if (body_size > 0)
+strcat(json_body, ",");
+strcat(json_body, temp_body);
+body_size += task_size + (body_size > 0 ? 1 : 0);
+free(temp_body);
+}
+
+char *new_body = realloc(json_body, body_size + 2);
+if (!new_body)
+{
+free(json_body);
+return NULL;
+}
+json_body = new_body;
+strcat(json_body, "]");
+
+response_size = snprintf(NULL, 0,
+"HTTP/1.1 200 OK\r\n"
+"Content-Length: %zu\r\n"
+"Content-Type: application/json\r\n"
+"\r\n"
+"%s",
+strlen(json_body), json_body);
+response = malloc(response_size + 1);
+if (!response)
+{
+free(json_body);
+return NULL;
+}
+snprintf(response, response_size + 1,
+"HTTP/1.1 200 OK\r\n"
+"Content-Length: %zu\r\n"
+"Content-Type: application/json\r\n"
+"\r\n"
+"%s",
+strlen(json_body), json_body);
+
+free(json_body);
+return (response);
 }
